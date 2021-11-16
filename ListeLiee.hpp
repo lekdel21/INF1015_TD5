@@ -119,6 +119,13 @@ public:
 			it.position_->suivant_->precedent_ = nullptr;
 			tete_ = it.position_->suivant_;
 		}
+		//surement enlever->
+		else if (queue_ == it.position_)
+		{
+			it.position_->precedent_->suivant_ = nullptr;
+			queue_ = it.position_->precedent_;
+		}
+		//Jusqu'ici.
 		else
 		{
 			it.position_->suivant_->precedent_ = it.position_->precedent_;

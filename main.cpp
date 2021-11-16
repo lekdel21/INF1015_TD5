@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <functional>
+#include <map>
 #include "cppitertools/range.hpp"
 #include "bibliotheque_cours.hpp"
 using namespace std;
@@ -101,6 +102,7 @@ int main()
 		herosListe.push_back(hero);
 	}
 
+	cout << "Partie 1: " << endl << endl;
 	//TODO: Créez un itérateur sur la liste liée à la position du héros Alucard
 	// Servez-vous de la fonction trouverParNom définie plus haut
 	cout << separateurSections << endl;
@@ -126,7 +128,7 @@ int main()
 	cout << separateurSections << endl;
 	cout << "Ancienne taille: " << herosListe.size() << endl;
 	Heros newHeros("Spider-man", "Spider-man the game", "Venom");
-	cout << "Nouvelle iterateur bidon : " << (*herosListe.insert(pos, newHeros)).getNom() << endl;
+	cout << "Nouvel iterateur bidon : " << (*herosListe.insert(pos, newHeros)).getNom() << endl;
 	cout << "Nouvelle taille: " << herosListe.size() << endl << endl;
 
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
@@ -168,7 +170,44 @@ int main()
 		hero1.afficher(cout);
 		cout << endl;
 	}
+	cout << separateurSections << endl;
+
+	cout << "Partie 2: " << endl << endl;
 	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
+	// Creer conteneur MAP.
+
+	//surement pas le best way to do it.
+
+	/*map<string, Heros> conteneurHeros = {};
+	for (Iterateur<Heros> it = herosListe.begin(); it != herosListe.end(); it.avancer())
+	{
+		conteneurHeros[(*it).getNom()] = *it;
+	}*/
+	string max = "ZZ";
+	Iterateur<Heros> itMax = herosListe.begin();
+	map<string, Heros> conteneurHeros = {};
+	unsigned int size = herosListe.size();
+	for (unsigned int i = 0; i < size; i++)
+	{
+		for (Iterateur<Heros> it = herosListe.begin(); it != herosListe.end(); it.avancer())
+		{
+			if (int((*it).getNom()[0]) == max[0] && int((*it).getNom()[0]) + int((*it).getNom()[1]) < max[0] + max[1]  || int((*it).getNom()[0]) < max[0])
+			{
+				max = (*it).getNom();
+				itMax = it;
+			}
+		}
+		conteneurHeros[(*itMax).getNom()] = *itMax;
+		if (herosListe.size() > 1)
+			herosListe.erase(itMax);
+		max = "ZZ";
+	}
+	conteneurHeros["Randi"].afficher(cout);
+
+	//2.2: L'indice de complexité de la map est de O(log(n)). En effet, Les élements d'une map sont disposés sous forme d'un "Tree structure", à chaque fois que l'on examine un noeud du circuit, on détermine si l'élement que l'on cherche est plus grand ou plus petit que le noeud lui-meme. Donc, normalement il serait nécessaire de faire cette démarche log2(n) car chaque comparaison enlève la moitier des possibilités.
+
+	//2.3: La liste cherchera avec une complexité de O(n), car il doit passer chaque élément un par un (n*O(1)). Donc, pour une liste très courte, la liste serait plus rapide que la map, par contre le reste du temps la map sera plus rapide avec un indice de complexité de O(log(n)). Bref, pour un nombre d'élements moyen, il serait préférable d'y aller avec une map.
+
 
 	//TODO: Assurez-vous de n'avoir aucune ligne non couverte dans les classes pour la liste liée.  Il peut y avoir des lignes non couvertes dans les personnages...
 	for (unsigned int i = 0; i < herosListe.size(); i++)
