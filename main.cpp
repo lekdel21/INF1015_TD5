@@ -178,12 +178,14 @@ int main()
 
 	//surement pas le best way to do it.
 
-	/*map<string, Heros> conteneurHeros = {};
+	map<string, Heros> conteneurHeros = {};
 	for (Iterateur<Heros> it = herosListe.begin(); it != herosListe.end(); it.avancer())
 	{
 		conteneurHeros[(*it).getNom()] = *it;
-	}*/
-	string max = "ZZ";
+	}
+	for (auto&& [nom, hero1] : conteneurHeros)
+		cout << nom << endl;
+	/*string max = "ZZ";
 	Iterateur<Heros> itMax = herosListe.begin();
 	map<string, Heros> conteneurHeros = {};
 	unsigned int size = herosListe.size();
@@ -201,10 +203,10 @@ int main()
 		if (herosListe.size() > 1)
 			herosListe.erase(itMax);
 		max = "ZZ";
-	}
-	conteneurHeros["Randi"].afficher(cout);
+	}*/ // INUTILE CA SE CLASSE EN ORDRE ALPHABETIQUE AUTOMATIQUEMENT!!!!
+	
 
-	//2.2: L'indice de complexité de la map est de O(log(n)). En effet, Les élements d'une map sont disposés sous forme d'un "Tree structure", à chaque fois que l'on examine un noeud du circuit, on détermine si l'élement que l'on cherche est plus grand ou plus petit que le noeud lui-meme. Donc, normalement il serait nécessaire de faire cette démarche log2(n) car chaque comparaison enlève la moitier des possibilités.
+	//2.2: L'indice de complexité de la map est de O(log(n)). En effet, Les élements d'une map sont disposés sous forme d'un "Tree structure", à chaque fois que l'on examine un noeud du circuit, on détermine si l'élement que l'on cherche est plus grand ou plus petit que le noeud lui-meme. Donc, normalement il serait nécessaire de faire cette démarche log2(n), car chaque comparaison enlève la moitier des possibilités.
 
 	//2.3: La liste cherchera avec une complexité de O(n), car il doit passer chaque élément un par un (n*O(1)). Donc, pour une liste très courte, la liste serait plus rapide que la map, par contre le reste du temps la map sera plus rapide avec un indice de complexité de O(log(n)). Bref, pour un nombre d'élements moyen, il serait préférable d'y aller avec une map.
 
